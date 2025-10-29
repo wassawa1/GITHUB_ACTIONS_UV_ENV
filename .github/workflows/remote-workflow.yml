@@ -6,24 +6,40 @@ on:
 
 jobs:
   test:
+    strategy:
+      matrix:
+        python-version: [ "3.12" ]
     runs-on: ubuntu-latest
+    env:
+      UV_LINK_MODE: copy
+      PIP_ROOT_USER_ACTION: ignore
+      CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+
     steps:
       - uses: actions/checkout@v4
 
+      - name: Cache uv environments
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/uv
+          key: ${{ runner.os }}-uv-${{ hashFiles('**/pyproject.toml') }}
+          restore-keys: |
+            ${{ runner.os }}-uv-
+
       - name: Install uv
-        run: curl -LsSf https://astral.sh/uv/install.sh | sh
-        shell: bash
+        run: pip install --upgrade pip && pip install uv
 
-      - name: Set up Python with uv
+      - name: Set up Python and dependencies
         run: |
-          uv python install 3.12
+          uv python install ${{ matrix.python-version }}
           uv venv
+          uv sync --frozen
 
-      - name: Install dependencies with uv
-        run: uv pip install -e ".[dev]"
-
-      - name: Run tests
-        run: uv run pytest -q
+      - name: Run tests with coverage
+        run: uv run pytest --cov=. --cov-report=xml -q
 
       - name: Upload coverage to Codecov
+        if: env.CODECOV_TOKEN != ''
         uses: codecov/codecov-action@v4
+        with:
+          token: ${{ env.CODECOV_TOKEN }}

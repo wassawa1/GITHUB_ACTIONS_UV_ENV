@@ -4,19 +4,6 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "sandbox"
-version = "0.0.0"
-description = "Minimal project for local CI testing"
-readme = "README.md"
-requires-python = ">=3.8"
-
-[project.optional-dependencies]
-dev = [
-  "pytest",
-  "coverage",
-  "codecov",
-]
-[project]
-name = "sandbox"
 version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"

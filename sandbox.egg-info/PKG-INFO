@@ -1,3 +1,15 @@
+Metadata-Version: 2.4
+Name: sandbox
+Version: 0.1.0
+Summary: Add your description here
+Requires-Python: >=3.14
+Description-Content-Type: text/markdown
+Requires-Dist: coverage>=7.11.0
+Requires-Dist: optuna>=4.5.0
+Requires-Dist: pyinstaller>=6.16.0
+Requires-Dist: pyside6>=6.10.0
+Requires-Dist: pytest>=8.4.2
+
 # GitHub Actions（ローカル確認用）
 
 このリポジトリは、GitHub Actions のワークフローをローカルで簡単に確認するための最小サンプルです。
@@ -44,15 +56,7 @@ docker info >/dev/null 2>&1 && echo OK || echo NG
 ```bash
 # workflow_dispatch をトリガーして実行
 ./bin/act workflow_dispatch -W .github/workflows/remote-workflow.yml \
-  -P ubuntu-latest=ghcr.io/catthehacker/ubuntu:act-latest --pull=false
-```
-
-また、ファイルをactrcに保存しておくと便利です。
-
-```
-# .actrc の例
--P ubuntu-latest=ghcr.io/catthehacker/ubuntu:act-latest
---pull=false
+  -P ubuntu-latest=ghcr.io/catthehacker/ubuntu:act-latest
 ```
 
 ## 注意点
