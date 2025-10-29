@@ -8,7 +8,7 @@ jobs:
   test:
     strategy:
       matrix:
-        python-version: [ "3.12" ]
+        python-version: [ "3.12", "3.13", "3.14" ]
     runs-on: ubuntu-latest
     env:
       UV_LINK_MODE: copy
@@ -29,10 +29,17 @@ jobs:
       - name: Install uv
         run: pip install --upgrade pip && pip install uv
 
-      - name: Set up Python and dependencies
+      - name: Set up Python
         run: |
           uv python install ${{ matrix.python-version }}
           uv venv
+
+      - name: Show Python version
+        run: uv run python --version
+
+      - name: Resolve deps (ephemeral lock)
+        run: |
+          uv lock
           uv sync --frozen
 
       - name: Run tests with coverage
