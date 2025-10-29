@@ -1,0 +1,30 @@
+[build-system]
+requires = ["setuptools>=61", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "sandbox"
+version = "0.0.0"
+description = "Minimal project for local CI testing"
+readme = "README.md"
+requires-python = ">=3.8"
+
+[project.optional-dependencies]
+dev = [
+  "pytest",
+  "coverage",
+  "codecov",
+]
+[project]
+name = "sandbox"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.14"
+dependencies = [
+    "coverage>=7.11.0",
+    "optuna>=4.5.0",
+    "pyinstaller>=6.16.0",
+    "pyside6>=6.10.0",
+    "pytest>=8.4.2",
+]
